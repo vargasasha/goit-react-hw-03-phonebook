@@ -27,13 +27,19 @@ export class App extends Component {
       this.setState({ contacts: savedContacts });
 
       localStorage.setItem('contacts', JSON.stringify(initialContacts));
-
     } else {
       this.setState({ contacts: initialContacts });
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {}
+  componentDidUpdate(prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem(
+        localStorageKey,
+        JSON.stringify(this.state.contacts)
+      );
+    }
+  }
 
   onAddContact = newContact => {
     if (
